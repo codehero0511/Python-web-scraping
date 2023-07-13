@@ -1,3 +1,5 @@
+import openpyxl
+import csv
 import requests
 from bs4 import BeautifulSoup
 
@@ -17,4 +19,19 @@ titles = [element.text for element in title_elements]
 
 # 輸出前10筆新聞標題
 for i, title in enumerate(titles[:10], 1):
-    print(f'{i}. {title}')
+    print(f'{i}.{title}')
+
+# 將新聞標題存儲到 Excel 檔案中
+filepath = r"C:\\Users\\user\\Desktop\\news_titles.xlsx"
+
+workbook = openpyxl.Workbook()
+worksheet = workbook.active
+
+# 在第一列中寫入新聞標題
+for i, title in enumerate(titles[:10], 1):
+    worksheet.cell(row=i, column=1, value=title)
+
+# 儲存 Excel 檔案
+workbook.save(filepath)
+
+print("新聞標題已成功儲存到 Excel 檔案中。")
